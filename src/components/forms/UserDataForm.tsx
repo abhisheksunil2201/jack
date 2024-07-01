@@ -14,9 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { MainFormSchema, UserFormQuestions } from "./utils/form";
+import { MainFormSchema, MainFormType } from "../utils/form";
 
-export function UserDataForm() {
+interface UserDataFormProps {
+  questions: MainFormType;
+}
+
+export function UserDataForm({ questions }: UserDataFormProps) {
   const mainform = useForm<z.infer<typeof MainFormSchema>>({
     resolver: zodResolver(MainFormSchema),
     defaultValues: {
@@ -30,10 +34,12 @@ export function UserDataForm() {
     console.log(values);
   }
 
+  if (!questions) return null;
+
   return (
     <Form {...mainform}>
       <form onSubmit={mainform.handleSubmit(onSubmit)} className="space-y-8">
-        {UserFormQuestions.mainForm.map((formItem) => {
+        {questions.map((formItem) => {
           return (
             <FormField
               key={formItem.name}
