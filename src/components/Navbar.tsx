@@ -46,16 +46,6 @@ const Navbar = async () => {
               </>
             ) : (
               <>
-                <Link
-                  href="/dashboard"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Dashboard
-                </Link>
-
                 <UserAccountNav
                   name={
                     !user.given_name || !user.family_name

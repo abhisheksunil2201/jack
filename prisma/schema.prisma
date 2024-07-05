@@ -20,6 +20,29 @@ model User {
   email String  @unique
   userId String
   profilePic Image?
+  mainInfo   MainInfo?
+  basicInfo  BasicInfo?
+}
+
+model MainInfo {
+  id           String @id @default(uuid())
+  user         User   @relation(fields: [userId], references: [id])
+  userId       String @unique
+  curiousAbout String
+  excitedAbout String
+  profilePic   String
+}
+
+model BasicInfo {
+  id                 String   @id @default(uuid())
+  user               User     @relation(fields: [userId], references: [id])
+  userId             String   @unique
+  pronouns           String
+  workingOnOwnIdeas  String
+  milestones         String
+  viralThing         String
+  projectProgress    String
+  images             String[]
 }
 
 enum uploadStatus {

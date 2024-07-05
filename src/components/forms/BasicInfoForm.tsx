@@ -55,6 +55,7 @@ export function BasicInfoForm({ questions }: BasicInfoFormProps) {
     const prompt = generateUserDataFromFormForAI(values);
     console.log(prompt);
     const response = await axios.post("/api/replicate", { prompt });
+
     if (response.status !== 201) {
       console.log(response);
       return;
