@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { MainFormSchema, MainFormType } from "../utils/form";
+import { trpc } from "@/app/_trpc/client";
+import { redirect } from "next/navigation";
 
 interface UserDataFormProps {
   questions: MainFormType;
@@ -32,7 +34,14 @@ export function UserDataForm({ questions }: UserDataFormProps) {
 
   function onSubmit(values: z.infer<typeof MainFormSchema>) {
     console.log(values);
+    createMainInfo({ ...values, profilePic: "" });
   }
+
+  const { mutate: createMainInfo } = trpc.createMainUserInfo.useMutation({
+    onSuccess: () => {
+      redirect("/");
+    },
+  });
 
   if (!questions) return null;
 

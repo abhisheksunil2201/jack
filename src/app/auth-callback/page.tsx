@@ -13,7 +13,8 @@ const Page = () => {
   trpc.authCallback.useQuery(undefined, {
     onSuccess: ({ success }) => {
       if (success) {
-        router.push(origin ? `/${origin}` : "/");
+        // user is synced to db
+        router.push(origin ? `/${origin}` : "/dashboard");
       }
     },
     onError: (err) => {

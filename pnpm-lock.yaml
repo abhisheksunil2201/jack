@@ -15,8 +15,8 @@ dependencies:
     specifier: ^2.2.10
     version: 2.2.10(@babel/core@7.24.5)(next@14.2.4)(react-dom@18.3.1)(react@18.3.1)
   '@prisma/client':
-    specifier: 5.7.1
-    version: 5.7.1(prisma@5.14.0)
+    specifier: ^5.16.1
+    version: 5.16.1(prisma@5.14.0)
   '@radix-ui/react-avatar':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
@@ -39,7 +39,7 @@ dependencies:
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.3.1)(react@18.3.1)
   '@tanstack/react-query':
-    specifier: ^4.36.1
+    specifier: ^4.0.0
     version: 4.36.1(react-dom@18.3.1)(react@18.3.1)
   '@trpc/client':
     specifier: ^10.45.0
@@ -1613,8 +1613,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@prisma/client@5.7.1(prisma@5.14.0):
-    resolution: {integrity: sha512-TUSa4nUcC4nf/e7X3jyO1pEd6XcI/TLRCA0KjkA46RDIpxUaRsBYEOqITwXRW2c0bMFyKcCRXrH4f7h4q9oOlg==}
+  /@prisma/client@5.16.1(prisma@5.14.0):
+    resolution: {integrity: sha512-wM9SKQjF0qLxdnOZIVAIMKiz6Hu7vDt4FFAih85K1dk/Rr2mdahy6d3QP41K62N9O0DJJA//gUDA3Mp49xsKIg==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
