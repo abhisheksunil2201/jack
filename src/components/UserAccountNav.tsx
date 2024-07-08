@@ -61,12 +61,6 @@ const UserAccountNav = async ({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
         <DropdownMenuItem className="cursor-pointer">
           <LogoutLink>Log out</LogoutLink>
         </DropdownMenuItem>

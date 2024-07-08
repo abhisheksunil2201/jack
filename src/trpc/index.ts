@@ -39,24 +39,34 @@ export const appRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { curiousAbout, excitedAbout, profilePic } = input;
-      console.log("Creating");
-
-      await db.mainInfo.upsert({
+      const dbUser = await db.user.findFirst({
         where: { id: userId },
+      });
+
+      const mainInfoUpsert = await db.mainInfo.upsert({
+        where: { userId },
         update: {
           curiousAbout: curiousAbout as string,
           excitedAbout: excitedAbout as string,
           profilePic: profilePic as string,
         },
         create: {
-          id: userId,
           userId: userId,
           curiousAbout: curiousAbout as string,
           excitedAbout: excitedAbout as string,
           profilePic: profilePic as string,
         },
       });
-      console.log("created");
+
+      if (mainInfoUpsert) {
+        await db.user.update({
+          where: { id: userId },
+          data: {
+            mainInfoAdded: true,
+          },
+        });
+      }
+
       return { success: true };
     }),
 });

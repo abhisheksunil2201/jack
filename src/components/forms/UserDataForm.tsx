@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { MainFormSchema, MainFormType } from "../utils/form";
 import { trpc } from "@/app/_trpc/client";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 interface UserDataFormProps {
   questions: MainFormType;
@@ -39,7 +39,7 @@ export function UserDataForm({ questions }: UserDataFormProps) {
 
   const { mutate: createMainInfo } = trpc.createMainUserInfo.useMutation({
     onSuccess: () => {
-      redirect("/");
+      redirect("/", RedirectType.replace);
     },
   });
 

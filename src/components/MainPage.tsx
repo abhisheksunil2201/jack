@@ -3,11 +3,37 @@ import { UserDataForm } from "@/components/forms/UserDataForm";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { UserFormQuestions } from "@/components/utils/form";
 
-export default async function MainPage() {
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
+import { db } from "@/components/db";
+import ChatScreen from "./ChatScreen";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+
+interface MainPageProps {
+  layout: RequestCookie;
+}
+
+export default async function MainPage({ layout }: MainPageProps) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user || !user.id) {
+    redirect("/auth-callback");
+  }
+  const dbUser = await db.user.findFirst({
+    where: {
+      id: user.id,
+    },
+  });
+
+  if (!dbUser) redirect("/auth-callback");
+
   return (
     <MaxWidthWrapper>
-      <UserDataForm questions={UserFormQuestions.mainForm} />
-      <BasicInfoForm questions={UserFormQuestions.basics} />
+      {!dbUser.mainInfoAdded ? (
+        <UserDataForm questions={UserFormQuestions.mainForm} />
+      ) : (
+        <ChatScreen layout={layout} />
+      )}
     </MaxWidthWrapper>
   );
 }
