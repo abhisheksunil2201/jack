@@ -6,7 +6,7 @@ import { UserFormQuestions } from "@/components/utils/form";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { db } from "@/components/db";
-import ChatScreen from "./ChatScreen";
+import ChatScreen from "./chat/ChatScreen";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 interface MainPageProps {
@@ -17,7 +17,7 @@ export default async function MainPage({ layout }: MainPageProps) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   if (!user || !user.id) {
-    redirect("/auth-callback");
+    redirect("/sign-in");
   }
   const dbUser = await db.user.findFirst({
     where: {

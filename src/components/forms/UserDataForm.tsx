@@ -33,7 +33,6 @@ export function UserDataForm({ questions }: UserDataFormProps) {
   });
 
   function onSubmit(values: z.infer<typeof MainFormSchema>) {
-    console.log(values);
     createMainInfo({ ...values, profilePic: "" });
   }
 

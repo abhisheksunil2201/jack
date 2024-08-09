@@ -53,7 +53,6 @@ export function BasicInfoForm({ questions }: BasicInfoFormProps) {
 
   async function onSubmit(values: z.infer<typeof BasicFormSchema>) {
     const prompt = generateUserDataFromFormForAI(values);
-    console.log(prompt);
     const response = await axios.post("/api/replicate", { prompt });
 
     if (response.status !== 201) {

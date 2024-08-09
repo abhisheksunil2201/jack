@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Nav from "./Nav";
+import Nav from "../Nav";
 import Chat from "./Chat";
-import { TooltipProvider } from "./ui/tooltip";
+import { TooltipProvider } from "../ui/tooltip";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "./ui/resizable";
+} from "../ui/resizable";
 import { cn } from "@/lib/utils";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { Inbox, UserRoundSearch } from "lucide-react";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import PeopleList from "./PeopleList";
+import PeopleList from "../PeopleList";
 
 interface ChatScreenProps {
   layout: RequestCookie;
@@ -22,7 +22,7 @@ interface ChatScreenProps {
 export default function ChatScreen({ layout }: ChatScreenProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const defaultLayout = layout ? JSON.parse(layout.value) : [400, 1090];
+  const defaultLayout = layout ? JSON.parse(layout.value) : [300, 1190];
   const navCollapsedSize = 3.5;
 
   return (
@@ -41,7 +41,7 @@ export default function ChatScreen({ layout }: ChatScreenProps) {
           collapsedSize={navCollapsedSize}
           collapsible={true}
           minSize={15}
-          maxSize={30}
+          maxSize={20}
           onCollapse={() => {
             setIsCollapsed(true);
             document.cookie = `react-resizable-panels:collapsed=true`;

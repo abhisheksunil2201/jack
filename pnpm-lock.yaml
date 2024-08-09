@@ -14,6 +14,9 @@ dependencies:
   '@kinde-oss/kinde-auth-nextjs':
     specifier: ^2.2.10
     version: 2.2.10(@babel/core@7.24.5)(next@14.2.4)(react-dom@18.3.1)(react@18.3.1)
+  '@mantine/hooks':
+    specifier: ^7.11.1
+    version: 7.11.1(react@18.3.1)
   '@prisma/client':
     specifier: ^5.16.1
     version: 5.16.1(prisma@5.14.0)
@@ -71,6 +74,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  date-fns:
+    specifier: ^3.6.0
+    version: 3.6.0
   lucide-react:
     specifier: ^0.378.0
     version: 0.378.0(react@18.3.1)
@@ -1505,6 +1511,14 @@ packages:
     dependencies:
       jose: 5.3.0
       uncrypto: 0.1.3
+    dev: false
+
+  /@mantine/hooks@7.11.1(react@18.3.1):
+    resolution: {integrity: sha512-28WS/U6QL4jaIHf1uFpny5Tglu9MoyyM4bWLmIcAQHtOD3YHpuNvs9OTWLqKAQs6VN+kydlxvjvT+w1LBWEpQg==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.3.1
     dev: false
 
   /@next/env@14.2.4:
@@ -3484,6 +3498,10 @@ packages:
       es-errors: 1.3.0
       is-data-view: 1.0.1
     dev: true
+
+  /date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
+    dev: false
 
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
