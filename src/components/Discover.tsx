@@ -42,15 +42,6 @@ function Discover() {
           </p>
         ))}
       </Marquee>
-      <div className="relative h-10 w-[80%] mt-32">
-        <Input
-          type="text"
-          placeholder="message jack"
-          inputMode="text"
-          className="focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-        />
-        <ArrowRight className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 z-10" />
-      </div>
     </div>
   );
 }

@@ -9,23 +9,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
 model User {
-  id String @id @unique // matches kinde user id
-  email String  @unique
-  userId String
-  profilePic Image?
-  mainInfo   MainInfo?
-  basicInfo  BasicInfo?
-  mainInfoAdded Boolean @default(false)
-  basicInfoAdded Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String     @id @unique // matches kinde user id
+  email          String     @unique
+  userId         String
+  profilePic     Image?
+  mainInfo       MainInfo?
+  basicInfo      BasicInfo?
+  mainInfoAdded  Boolean    @default(false)
+  basicInfoAdded Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  AIChat         AIChat?
 }
 
 model MainInfo {
@@ -37,14 +38,14 @@ model MainInfo {
 }
 
 model BasicInfo {
-  user               User     @relation(fields: [userId], references: [id])
-  userId             String   @unique
-  pronouns           String
-  workingOnOwnIdeas  String
-  milestones         String
-  viralThing         String
-  projectProgress    String
-  images             String[]
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String   @unique
+  pronouns          String
+  workingOnOwnIdeas String
+  milestones        String
+  viralThing        String
+  projectProgress   String
+  images            String[]
 }
 
 enum uploadStatus {
@@ -55,32 +56,33 @@ enum uploadStatus {
 }
 
 model Image {
-  id String @id @default(cuid())
-  name String
+  id           String       @id @default(cuid())
+  name         String
   uploadStatus uploadStatus @default(PENDING)
-  url String
-  key String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User User @relation(fields: [userId], references: [id])
-  userId String @unique
+  url          String
+  key          String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  User         User         @relation(fields: [userId], references: [id])
+  userId       String       @unique
 }
 
-model Chat {
-  id String @id @default(cuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  messages Message[]
+model AIChat {
+  id        String      @id @default(cuid())
+  title String 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  User      User        @relation(fields: [userId], references: [id])
+  userId    String      @unique
 }
 
-model Message {
-  id String @id @default(cuid())
-  senderId String
-  receiverId String
-  text String
+model AIMessage {
+  id            String  @id @default(cuid())
+  userId        String
+  text          String
+  isUserMessage Boolean
   timestamp DateTime @default(now())
-  chat Chat @relation(fields: [chatId], references: [id])
-  chatId String
+  chatId  String 
 
-  @@index([chatId])
+  @@index([userId])
 }

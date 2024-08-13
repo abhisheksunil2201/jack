@@ -39,9 +39,6 @@ export const appRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { curiousAbout, excitedAbout, profilePic } = input;
-      const dbUser = await db.user.findFirst({
-        where: { id: userId },
-      });
 
       const mainInfoUpsert = await db.mainInfo.upsert({
         where: { userId },

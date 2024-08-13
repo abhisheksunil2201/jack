@@ -6,14 +6,8 @@ import { UserFormQuestions } from "@/components/utils/form";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { db } from "@/components/db";
-import ChatScreen from "./chat/ChatScreen";
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
-interface MainPageProps {
-  layout: RequestCookie;
-}
-
-export default async function MainPage({ layout }: MainPageProps) {
+export default async function MainPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   if (!user || !user.id) {
@@ -27,13 +21,11 @@ export default async function MainPage({ layout }: MainPageProps) {
 
   if (!dbUser) redirect("/auth-callback");
 
+  if (dbUser.mainInfoAdded) redirect("/chat");
+
   return (
     <MaxWidthWrapper>
-      {!dbUser.mainInfoAdded ? (
-        <UserDataForm questions={UserFormQuestions.mainForm} />
-      ) : (
-        <ChatScreen layout={layout} />
-      )}
+      <UserDataForm questions={UserFormQuestions.mainForm} />
     </MaxWidthWrapper>
   );
 }
