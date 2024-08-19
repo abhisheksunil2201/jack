@@ -18,12 +18,12 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
           "justify-end": message.isUserMessage,
         })}
       >
-        <div
+        {/* <div
           className={cn(
             "relative flex h-6 w-6 aspect-square items-center justify-center",
             {
-              "order-2 bg-blue-600 rounded-sm": message.isUserMessage,
-              "order-1 bg-zinc-800 rounded-sm": !message.isUserMessage,
+              "order-2 bg-[#1F1F1F]": message.isUserMessage,
+              "order-1 bg-zinc-800": !message.isUserMessage,
               invisible: inNextMessageSamePerson,
             }
           )}
@@ -33,7 +33,7 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
           ) : (
             <Icons.logo className="fill-zinc-300 h-3/4 w-3/4" />
           )}
-        </div>
+        </div> */}
         <div
           className={cn("flex flex-col space-y-2 text-base max-w-md mx-2", {
             "order-1 items-end": message.isUserMessage,
@@ -42,8 +42,8 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
         >
           <div
             className={cn("px-4 py-2 rounded-lg inline-block", {
-              "bg-blue-600 text-white": message.isUserMessage,
-              "bg-gray-200 text-gray-900": !message.isUserMessage,
+              "bg-[#1F1F1F] text-white": message.isUserMessage,
+              "bg-gray-900 text-zinc-400": !message.isUserMessage,
               "rounded-br-none":
                 message.isUserMessage && !inNextMessageSamePerson,
               "rounded-bl-none":
@@ -68,7 +68,7 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
                   "text-blue-300": message.isUserMessage,
                 })}
               >
-                {format(new Date(message.createdAt), "HH:mm")}
+                {format(new Date(message.timestamp), "HH:mm")}
               </div>
             ) : null}
           </div>

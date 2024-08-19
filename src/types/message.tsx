@@ -3,13 +3,7 @@ import { inferRouterOutputs } from "@trpc/server";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
-// type Messages = RouterOutput["getFileMessages"]["messages"];
-export type Messages = {
-  id: string;
-  createdAt: Date;
-  text: string;
-  isUserMessage: boolean;
-}[];
+export type Messages = RouterOutput["getAiChatMessages"]["messages"];
 
 type OmitText = Omit<Messages[number], "text">;
 

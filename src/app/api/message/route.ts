@@ -7,7 +7,7 @@ import {
 } from "@langchain/community/vectorstores/astradb";
 import { NextRequest } from "next/server";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { OpenAIStream, StreamingTextResponse, streamText } from "ai";
+import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 const astraConfig: AstraLibArgs = {

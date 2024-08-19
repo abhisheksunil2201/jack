@@ -59,52 +59,48 @@ export const ChatContextProvider = ({ chatId, children }: Props) => {
       backupMessage.current = message;
       setMessage("");
 
-      // step 1
-      // await utils.getFileMessages.cancel();
+      await utils.getAiChatMessages.cancel();
 
-      // step 2
-      // const previousMessages = utils.getFileMessages.getInfiniteData();
+      const previousMessages = utils.getAiChatMessages.getInfiniteData({
+        chatId: chatId!,
+      });
 
-      // step 3
-      // utils.getFileMessages.setInfiniteData(
-      //   { fileId, limit: INFINITE_QUERY_LIMIT },
-      //   (old) => {
-      //     if (!old) {
-      //       return {
-      //         pages: [],
-      //         pageParams: [],
-      //       };
-      //     }
+      utils.getAiChatMessages.setInfiniteData({ chatId: chatId! }, (old) => {
+        if (!old) {
+          return {
+            pages: [],
+            pageParams: [],
+          };
+        }
 
-      //     let newPages = [...old.pages];
+        let newPages = [...old.pages];
 
-      //     let latestPage = newPages[0]!;
+        let latestPage = newPages[0]!;
 
-      //     latestPage.messages = [
-      //       {
-      //         createdAt: new Date().toISOString(),
-      //         id: crypto.randomUUID(),
-      //         text: message,
-      //         isUserMessage: true,
-      //       },
-      //       ...latestPage.messages,
-      //     ];
+        latestPage.messages = [
+          {
+            timestamp: new Date().toISOString(),
+            id: crypto.randomUUID(),
+            text: message,
+            isUserMessage: true,
+          },
+          ...latestPage.messages,
+        ];
 
-      //     newPages[0] = latestPage;
+        newPages[0] = latestPage;
 
-      //     return {
-      //       ...old,
-      //       pages: newPages,
-      //     };
-      //   }
-      // );
+        return {
+          ...old,
+          pages: newPages,
+        };
+      });
 
       setIsLoading(true);
 
-      // return {
-      //   previousMessages:
-      //     previousMessages?.pages.flatMap((page) => page.messages) ?? [],
-      // };
+      return {
+        previousMessages:
+          previousMessages?.pages.flatMap((page) => page.messages) ?? [],
+      };
     },
     onSuccess: async (stream) => {
       setIsLoading(false);
@@ -132,67 +128,64 @@ export const ChatContextProvider = ({ chatId, children }: Props) => {
         accResponse += chunkValue;
 
         // append chunk to the actual message
-        // utils.getFileMessages.setInfiniteData(
-        //   { fileId, limit: INFINITE_QUERY_LIMIT },
-        //   (old) => {
-        //     if (!old) return { pages: [], pageParams: [] };
+        utils.getAiChatMessages.setInfiniteData({ chatId: chatId! }, (old) => {
+          if (!old) return { pages: [], pageParams: [] };
 
-        //     let isAiResponseCreated = old.pages.some((page) =>
-        //       page.messages.some((message) => message.id === "ai-response")
-        //     );
+          let isAiResponseCreated = old.pages.some((page) =>
+            page.messages.some((message) => message.id === "ai-response")
+          );
 
-        //     let updatedPages = old.pages.map((page) => {
-        //       if (page === old.pages[0]) {
-        //         let updatedMessages;
+          let updatedPages = old.pages.map((page) => {
+            if (page === old.pages[0]) {
+              let updatedMessages;
 
-        //         if (!isAiResponseCreated) {
-        //           updatedMessages = [
-        //             {
-        //               createdAt: new Date().toISOString(),
-        //               id: "ai-response",
-        //               text: accResponse,
-        //               isUserMessage: false,
-        //             },
-        //             ...page.messages,
-        //           ];
-        //         } else {
-        //           updatedMessages = page.messages.map((message) => {
-        //             if (message.id === "ai-response") {
-        //               return {
-        //                 ...message,
-        //                 text: accResponse,
-        //               };
-        //             }
-        //             return message;
-        //           });
-        //         }
+              if (!isAiResponseCreated) {
+                updatedMessages = [
+                  {
+                    timestamp: new Date().toISOString(),
+                    id: "ai-response",
+                    text: accResponse,
+                    isUserMessage: false,
+                  },
+                  ...page.messages,
+                ];
+              } else {
+                updatedMessages = page.messages.map((message) => {
+                  if (message.id === "ai-response") {
+                    return {
+                      ...message,
+                      text: accResponse,
+                    };
+                  }
+                  return message;
+                });
+              }
 
-        //         return {
-        //           ...page,
-        //           messages: updatedMessages,
-        //         };
-        //       }
+              return {
+                ...page,
+                messages: updatedMessages,
+              };
+            }
 
-        //       return page;
-        //     });
+            return page;
+          });
 
-        //     return { ...old, pages: updatedPages };
-        //   }
-        // );
+          return { ...old, pages: updatedPages };
+        });
       }
     },
 
     onError: (_, __, context) => {
       setMessage(backupMessage.current);
-      // utils.getFileMessages.setData(
-      //   { fileId },
-      //   { messages: context?.previousMessages ?? [] }
-      // );
+      utils.getAiChatMessages.setData(
+        { chatId: chatId! },
+        { messages: context?.previousMessages ?? [] }
+      );
     },
     onSettled: async () => {
       setIsLoading(false);
 
-      // await utils.getFileMessages.invalidate({ fileId });
+      await utils.getAiChatMessages.invalidate({ chatId: chatId! });
     },
   });
 
